@@ -25,3 +25,5 @@ To do:
   - environment persist across commands
   - separate RUN commands are good because then things can be changed without redoing everything
 
+Link to Gabriele's directions:
+- https://docs.google.com/document/d/13b86ljBcJ2ATIZ_8E59QlUWo5uQQYwcs_pPLIFDksjk/edit
