@@ -1,3 +1,4 @@
 MARTe2_DIR                   /opt/MARTe2/MARTe2
-export MARTe2_Components_DIR /opt/MARTe2/MARTe2-components
+MARTe2_Components_DIR        /opt/MARTe2/MARTe2-components
+MARTE_DIR                    /opt/MARTe2/MARTe2-MDSplus/Startup
 lev_path                     /opt/MARTe2/MARTe2-MDSplus/trees

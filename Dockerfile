@@ -89,3 +89,5 @@ ADD lev_model.tree /opt/MARTe2/MARTe2-MDSplus/trees/lev_model.tree
 ADD lev_model.characteristics /opt/MARTe2/MARTe2-MDSplus/trees/lev_model.characteristics
 ADD lev_model.datafile /opt/MARTe2/MARTe2-MDSplus/trees/lev_model.datafile
 
+ADD receive_evstream /root/receive_evstream
+ADD receive_evstream.cpp /root/receive_evstream.cpp
