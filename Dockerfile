@@ -6,6 +6,12 @@ RUN apt-get update;\
       rsync reprepro wget git automake make tar\
       g++ gfortran openjdk-8-jdk\
       python-dev python-setuptools python-numpy python-pip\
+      libpython3.7 \
+      libpython3.7-dev \
+      libpython3.7-stdlib \
+      python3.7 \
+      python3.7-dev \
+      python3-dev python3-setuptools python3-numpy python3-pip\
       openssh-server\
       gdb gdbserver\
       libasan0 libtsan0 valgrind\
@@ -14,12 +20,6 @@ RUN apt-get update;\
       libdc1394-22-dev libraw1394-dev\
       libxml2-dev freetds-dev\
       libmotif-dev libxt-dev x11proto-print-dev\
-      libglobus-callout-dev\
-      libglobus-gridmap-callout-error-dev\
-      libglobus-gsi-credential-dev\
-      libglobus-gsi-proxy-core-dev\
-      libglobus-gss-assist-dev\
-      libglobus-gssapi-gsi-dev\
       libglobus-xio-gsi-driver-dev\
       libncurses5-dev\
       libncursesw5-dev;
@@ -60,4 +60,27 @@ RUN cd /opt/MARTe2; git clone https://github.com/MDSplus/MARTe2-MDSplus.git
 RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/Components/MDSEventManager;make -f Makefile.linux
 RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/GAMs/MathExpressionGAM;make -f Makefile.linux
 RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/GAMs/SimulinkInterfaceGAM; make -f Makefile.linux
-RUN apt-get install -y python3-numpy libpython3-dev python3-dev
+
+# make sure python3.7 is the default python3 and numpy is installed
+RUN apt-get -y remove python3-numpy; \
+rm /usr/bin/python3; \
+ln -s /usr/bin/python3.7 /usr/bin/python3; \
+pip3 install numpy
+
+RUN apt-get -y install vim 
+
+#patch pygam to match UB python locations
+ADD ub-python3.patch /opt/MARTe2/MARTe2-MDSplus/
+RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/; patch -i ub-python3.patch GAMs/PyGAM/Makefile.inc 
+RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/GAMs/PyGAM;make -f Makefile.linux
+
+RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/Startup; make -f Makefile.linux
+
+RUN mkdir -p /usr/local/mdsplus/local
+ADD envsyms /usr/local/mdsplus/local
+
+RUN apt-get -y install mdsplus-alpha-rfxdevices
+
+RUN cd /usr/local/mdsplus/python/MDSplus/; python setup.py install; python3 setup.py install
+
+RUN echo ". /etc/profile.d/mdsplus.sh" >> ~/.bashrc
