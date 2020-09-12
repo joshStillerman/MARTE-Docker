@@ -9,9 +9,23 @@ Build with:
 docker build -t marte2 --build-arg SSH_KEY="$(cat ~/.ssh/id_rsa)" .
 ```
 
-Run with:
+Run once with:
 ```
 docker run -it marte2 /bin/bash
+```
+
+Run and leave running:
+```
+docker run -dt marte2
+```
+
+Connect to it with:
+```
+% docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+bd9a7b15eec1        marte2              "/bin/bash"         12 minutes ago      Up 12 minutes                           infallible_proskuriakova
+
+% docker exec -it bd9a7b15eec1 /bin/bash
 ```
 
 To do:
@@ -19,7 +33,8 @@ To do:
   - installs all at top
   - environment persist across commands
   - separate RUN commands are good because then things can be changed without redoing everything
-- construct the lev tree (or copy it in)
+- configure lev tree to do something
+- make a tree that actually calls simulink
 - write directions
 
 Link to Gabriele's directions:

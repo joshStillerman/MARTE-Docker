@@ -84,3 +84,8 @@ RUN apt-get -y install mdsplus-alpha-rfxdevices
 RUN cd /usr/local/mdsplus/python/MDSplus/; python setup.py install; python3 setup.py install
 
 RUN echo ". /etc/profile.d/mdsplus.sh" >> ~/.bashrc
+
+ADD lev_model.tree /opt/MARTe2/MARTe2-MDSplus/trees/lev_model.tree
+ADD lev_model.characteristics /opt/MARTe2/MARTe2-MDSplus/trees/lev_model.characteristics
+ADD lev_model.datafile /opt/MARTe2/MARTe2-MDSplus/trees/lev_model.datafile
+
