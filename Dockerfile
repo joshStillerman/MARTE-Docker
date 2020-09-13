@@ -91,3 +91,11 @@ ADD lev_model.datafile /opt/MARTe2/MARTe2-MDSplus/trees/lev_model.datafile
 
 ADD receive_evstream /root/receive_evstream
 ADD receive_evstream.cpp /root/receive_evstream.cpp
+
+RUN export MDSPLUS_DIR=/usr/local/mdsplus; export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/DataSources/MDSReaderNS/; make -f Makefile.linux
+
+RUN  export MDSPLUS_DIR=/usr/local/mdsplus; export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/DataSources/StreamOut/; make -f Makefile.linux
+
+RUN  export MDSPLUS_DIR=/usr/local/mdsplus; export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/DataSources/StreamIn/; make -f Makefile.linux
+
+RUN  export MDSPLUS_DIR=/usr/local/mdsplus; export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/DataSources/SWTrig/; make -f Makefile.linux
