@@ -25,6 +25,14 @@ RUN apt-get update;\
       libncursesw5-dev;
 RUN apt-get -y install libgtest-dev cmake
 
+RUN apt-get -y install curl gnupg && curl -fsSL http://www.mdsplus.org/dist/mdsplus.gpg.key | apt-key add -
+
+RUN sh -c "echo 'deb [arch=amd64] http://www.mdsplus.org/dist/Ubuntu18/repo MDSplus alpha' > /etc/apt/sources.list.d/mdsplus.list"      # 18, alpha release
+
+RUN apt-get update
+
+RUN apt-get -y install mdsplus-alpha mdsplus-alpha-devel
+
 RUN pip install --upgrade setuptools nose tap tap.py;
 RUN git config --global http.sslVerify false
 ARG SSH_KEY
@@ -46,15 +54,8 @@ RUN mkdir -p /opt/MARTe2; cd /opt/MARTe2; git clone git@github.mit.edu:jas/MARTe
 
 RUN cd /opt/MARTe2; git clone git@github.mit.edu:jas/MARTe2-components.git; cd MARTe2-components; git checkout develop
 
+RUN ln -s /usr/local/mdsplus/lib/ /usr/local/mdsplus/lib64; 
 RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2; make -f Makefile.linux;cd /opt/MARTe2/MARTe2-components;make -f Makefile.linux
-
-RUN apt-get -y install curl gnupg && curl -fsSL http://www.mdsplus.org/dist/mdsplus.gpg.key | apt-key add -
-
-RUN sh -c "echo 'deb [arch=amd64] http://www.mdsplus.org/dist/Ubuntu18/repo MDSplus alpha' > /etc/apt/sources.list.d/mdsplus.list"	# 18, alpha release
-
-RUN apt-get update
-
-RUN apt-get -y install mdsplus-alpha mdsplus-alpha-devel
 
 RUN cd /opt/MARTe2; git clone https://github.com/MDSplus/MARTe2-MDSplus.git
 RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/Components/MDSEventManager;make -f Makefile.linux
