@@ -35,29 +35,15 @@ RUN apt-get -y install mdsplus-alpha mdsplus-alpha-devel
 
 RUN pip install --upgrade setuptools nose tap tap.py;
 RUN git config --global http.sslVerify false
-ARG SSH_KEY
-ENV SSH_KEY=$SSH_KEY
 
-# Make ssh dir
-RUN mkdir /root/.ssh/
- 
-# Create id_rsa from string arg, and set permissions
+RUN mkdir -p /opt/MARTe2; cd /opt/MARTe2; git clone https://github.com/aneto0/MARTe2; cd MARTe2;git checkout develop
 
-RUN echo "$SSH_KEY" > /root/.ssh/id_rsa
-RUN chmod 600 /root/.ssh/id_rsa
- 
-# Create known_hosts
-RUN touch /root/.ssh/known_hosts
-
-RUN ssh-keyscan github.mit.edu >> /root/.ssh/known_hosts
-RUN mkdir -p /opt/MARTe2; cd /opt/MARTe2; git clone git@github.mit.edu:jas/MARTe2.git; cd MARTe2;git checkout develop
-
-RUN cd /opt/MARTe2; git clone git@github.mit.edu:jas/MARTe2-components.git; cd MARTe2-components; git checkout develop
+RUN cd /opt/MARTe2; git clone https://github.com/aneto0/MARTe2-components; cd MARTe2-components; git checkout develop
 
 RUN ln -s /usr/local/mdsplus/lib/ /usr/local/mdsplus/lib64; 
-RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2; make -f Makefile.linux;cd /opt/MARTe2/MARTe2-components;make -f Makefile.linux
+RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2; make -f Makefile.linux;cd /opt/MARTe2/MARTe2-components;make -f Makefile.linux
 
-RUN cd /opt/MARTe2; git clone https://github.com/MDSplus/MARTe2-MDSplus.git
+RUN cd /opt/MARTe2; git clone https://github.com/MDSplus/MARTe2-MDSplus.git; cd MARTe2-MDSplus; git checkout jas-arm
 RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/Components/MDSEventManager;make -f Makefile.linux
 RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/GAMs/MathExpressionGAM;make -f Makefile.linux
 RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/GAMs/SimulinkInterfaceGAM; make -f Makefile.linux
@@ -101,5 +87,10 @@ RUN  export MDSPLUS_DIR=/usr/local/mdsplus; export MARTe2_DIR=/opt/MARTe2/MARTe2
 
 RUN  export MDSPLUS_DIR=/usr/local/mdsplus; export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/DataSources/SWTrig/; make -f Makefile.linux
 
-RUN apt-get install -qqy x11-apps
+#patch Playground.sh so it is x86 not ARM
+ADD Playground.patch /opt/MARTe2/MARTe2-MDSplus/
+RUN cd /opt/MARTe2/MARTe2-MDSplus/; patch -i Playground.patch Startup/Playground.sh
+
+ADD sender.py /root/
+
 
