@@ -22,8 +22,17 @@ RUN apt-get update;\
       libmotif-dev libxt-dev x11proto-print-dev\
       libglobus-xio-gsi-driver-dev\
       libncurses5-dev\
-      libncursesw5-dev;
-RUN apt-get -y install libgtest-dev cmake
+      libncursesw5-dev\
+      libgtest-dev\
+      cmake\
+      curl\
+      vim\
+      flex\
+      bison\
+      gperf\
+      gnupg\
+      xinetd;
+
 
 RUN apt-get -y install curl gnupg && curl -fsSL http://www.mdsplus.org/dist/mdsplus.gpg.key | apt-key add -
 
@@ -31,17 +40,26 @@ RUN sh -c "echo 'deb [arch=amd64] http://www.mdsplus.org/dist/Ubuntu18/repo MDSp
 
 RUN apt-get update
 
-RUN apt-get -y install mdsplus-alpha mdsplus-alpha-devel
+RUN apt-get -y install mdsplus-alpha mdsplus-alpha-devel mdsplus-alpha-rfxdevices
 
 RUN pip install --upgrade setuptools nose tap tap.py;
-RUN git config --global http.sslVerify false
 
-RUN mkdir -p /opt/MARTe2; cd /opt/MARTe2; git clone https://github.com/aneto0/MARTe2; cd MARTe2;git checkout develop
+#make mdsplus from branch gm_devices
+#RUN cd;git clone --depth=1 https://github.com/MDSplus/mdsplus.git;cd mdsplus;./bootstrap;mkdir -p ../build; cd ../build; ../mdsplus/configure --prefix=/usr/local/mdsplus; make; make install
 
-RUN cd /opt/MARTe2; git clone https://github.com/aneto0/MARTe2-components; cd MARTe2-components; git checkout develop
+RUN mkdir -p /opt/MARTe2
+ADD MARTe2.tgz /opt/MARTe2/
+ADD MARTe2-components.tgz /opt/MARTe2/
 
-RUN ln -s /usr/local/mdsplus/lib/ /usr/local/mdsplus/lib64; 
-RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2; make -f Makefile.linux;cd /opt/MARTe2/MARTe2-components;make -f Makefile.linux
+#RUN mkdir -p /opt/MARTe2; cd /opt/MARTe2; git clone https://github.com/aneto0/MARTe2; cd MARTe2;git checkout develop
+
+#RUN cd /opt/MARTe2; git clone https://github.com/aneto0/MARTe2-components; cd MARTe2-components; git checkout develop
+
+#RUN ln -s /usr/local/mdsplus/lib/ /usr/local/mdsplus/lib64;
+ 
+RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2; make -f Makefile.linux
+
+RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-components;make -f Makefile.linux
 
 RUN cd /opt/MARTe2; git clone https://github.com/MDSplus/MARTe2-MDSplus.git; cd MARTe2-MDSplus; git checkout jas-arm
 RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/Components/MDSEventManager;make -f Makefile.linux
@@ -54,8 +72,6 @@ rm /usr/bin/python3; \
 ln -s /usr/bin/python3.7 /usr/bin/python3; \
 pip3 install numpy
 
-RUN apt-get -y install vim 
-
 #patch pygam to match UB python locations
 ADD ub-python3.patch /opt/MARTe2/MARTe2-MDSplus/
 RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/; patch -i ub-python3.patch GAMs/PyGAM/Makefile.inc 
@@ -65,8 +81,6 @@ RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MART
 
 RUN mkdir -p /usr/local/mdsplus/local
 ADD envsyms /usr/local/mdsplus/local
-
-RUN apt-get -y install mdsplus-alpha-rfxdevices
 
 RUN cd /usr/local/mdsplus/python/MDSplus/; python setup.py install; python3 setup.py install
 
@@ -93,4 +107,9 @@ RUN cd /opt/MARTe2/MARTe2-MDSplus/; patch -i Playground.patch Startup/Playground
 
 ADD sender.py /root/
 
-
+ADD libSimulinkWrapperGAM.so /usr/local/mdsplus/lib/
+ADD counter.so /usr/local/mdsplus/lib/
+ADD libSimulinkWrapperGAM.so /usr/local/mdsplus/lib/
+RUN ln -s /usr/local/mdsplus/lib/libSimulinkWrapperGAM.so /usr/local/mdsplus/lib/SimulinkWrapperGAM.so
+ADD rtw_capi_wrapper.so /usr/local/mdsplus/lib/
+ADD MARTE2_COMPONENT.py /usr/local/pydevices/RfxDevices/
