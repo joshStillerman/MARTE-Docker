@@ -109,7 +109,17 @@ ADD sender.py /root/
 
 ADD libSimulinkWrapperGAM.so /usr/local/mdsplus/lib/
 ADD counter.so /usr/local/mdsplus/lib/
+ADD increment.so /usr/local/mdsplus/lib/
 ADD libSimulinkWrapperGAM.so /usr/local/mdsplus/lib/
+ADD Controller.so /usr/local/mdsplus/lib/
+ADD Plant.so /usr/local/mdsplus/lib/
+ADD SetpointGeneration.so /usr/local/mdsplus/lib/
+
 RUN ln -s /usr/local/mdsplus/lib/libSimulinkWrapperGAM.so /usr/local/mdsplus/lib/SimulinkWrapperGAM.so
 ADD rtw_capi_wrapper.so /usr/local/mdsplus/lib/
 ADD MARTE2_COMPONENT.py /usr/local/pydevices/RfxDevices/
+
+ADD mag_model.tree /opt/MARTe2/MARTe2-MDSplus/trees/
+ADD mag_model.datafile /opt/MARTe2/MARTe2-MDSplus/trees/
+ADD mag_model.characteristics /opt/MARTe2/MARTe2-MDSplus/trees/
+
