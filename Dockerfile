@@ -40,6 +40,7 @@ RUN sh -c "echo 'deb [arch=amd64] http://www.mdsplus.org/dist/Ubuntu18/repo MDSp
 
 RUN apt-get update
 
+RUN echo test
 RUN apt-get -y install mdsplus-alpha mdsplus-alpha-devel mdsplus-alpha-rfxdevices
 
 RUN pip install --upgrade setuptools nose tap tap.py;
@@ -62,6 +63,8 @@ RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; 
 RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-components;make -f Makefile.linux
 
 RUN cd /opt/MARTe2; git clone https://github.com/MDSplus/MARTe2-MDSplus.git; cd MARTe2-MDSplus; git checkout jas-arm
+#RUN cd /opt/MARTe2; git clone https://github.com/MDSplus/MARTe2-MDSplus.git; cd MARTe2-MDSplus; git checkout develop
+
 RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/Components/MDSEventManager;make -f Makefile.linux
 RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/GAMs/MathExpressionGAM;make -f Makefile.linux
 RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/GAMs/SimulinkInterfaceGAM; make -f Makefile.linux
