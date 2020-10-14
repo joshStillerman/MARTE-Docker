@@ -38,9 +38,42 @@ RUN apt-get -y install curl gnupg && curl -fsSL http://www.mdsplus.org/dist/mdsp
 
 RUN sh -c "echo 'deb [arch=amd64] http://www.mdsplus.org/dist/Ubuntu18/repo MDSplus alpha' > /etc/apt/sources.list.d/mdsplus.list"      # 18, alpha release
 
-RUN apt-get update
+#RUN apt-get update
 
-RUN echo test
+ADD mdsplus-alpha-camac_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-camac_bin_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-d3d_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-devel_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-devel_bin_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-epics_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-gsi_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-gsi_bin_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-hdf5_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-hdf5_bin_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-htsdevices_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-idl_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-idl_bin_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-java_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-java_bin_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-kbsidevices_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-kernel_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-kernel_bin_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-labview_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-labview_bin_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-matlab_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-mitdevices_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-mitdevices_bin_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-motif_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-motif_bin_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-mssql_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-php_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-python_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-repo_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-rfxdevices_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha-w7xdevices_7.113.3_amd64.deb /var/cache/apt/archives/
+ADD mdsplus-alpha_7.113.3_amd64.deb /var/cache/apt/archives/
+
+RUN apt-get update
 RUN apt-get -y install mdsplus-alpha mdsplus-alpha-devel mdsplus-alpha-rfxdevices
 
 RUN pip install --upgrade setuptools nose tap tap.py;
@@ -48,6 +81,7 @@ RUN pip install --upgrade setuptools nose tap tap.py;
 #make mdsplus from branch gm_devices
 #RUN cd;git clone --depth=1 https://github.com/MDSplus/mdsplus.git;cd mdsplus;./bootstrap;mkdir -p ../build; cd ../build; ../mdsplus/configure --prefix=/usr/local/mdsplus; make; make install
 
+RUN echo "space"
 RUN mkdir -p /opt/MARTe2
 ADD MARTe2.tgz /opt/MARTe2/
 ADD MARTe2-components.tgz /opt/MARTe2/
@@ -62,12 +96,13 @@ RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; 
 
 RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-components;make -f Makefile.linux
 
-RUN cd /opt/MARTe2; git clone https://github.com/MDSplus/MARTe2-MDSplus.git; cd MARTe2-MDSplus; git checkout jas-arm
+RUN echo "yes"
+RUN cd /opt/MARTe2; git clone https://github.com/MDSplus/MARTe2-MDSplus.git; cd MARTe2-MDSplus; git checkout develop
 #RUN cd /opt/MARTe2; git clone https://github.com/MDSplus/MARTe2-MDSplus.git; cd MARTe2-MDSplus; git checkout develop
 
-RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/Components/MDSEventManager;make -f Makefile.linux
+RUN export MDSPLUS_DIR=/usr/local/mdsplus;export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe3/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/Components/MDSEventManager;make -f Makefile.linux
 RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/GAMs/MathExpressionGAM;make -f Makefile.linux
-RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/GAMs/SimulinkInterfaceGAM; make -f Makefile.linux
+#RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/GAMs/SimulinkInterfaceGAM; make -f Makefile.linux
 
 # make sure python3.7 is the default python3 and numpy is installed
 RUN apt-get -y remove python3-numpy; \
@@ -105,8 +140,8 @@ RUN  export MDSPLUS_DIR=/usr/local/mdsplus; export MARTe2_DIR=/opt/MARTe2/MARTe2
 RUN  export MDSPLUS_DIR=/usr/local/mdsplus; export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MARTe2/MARTe2-components;cd /opt/MARTe2/MARTe2-MDSplus/DataSources/SWTrig/; make -f Makefile.linux
 
 #patch Playground.sh so it is x86 not ARM
-ADD Playground.patch /opt/MARTe2/MARTe2-MDSplus/
-RUN cd /opt/MARTe2/MARTe2-MDSplus/; patch -i Playground.patch Startup/Playground.sh
+#ADD Playground.patch /opt/MARTe2/MARTe2-MDSplus/
+#RUN cd /opt/MARTe2/MARTe2-MDSplus/; patch -i Playground.patch Startup/Playground.sh
 
 ADD sender.py /root/
 
@@ -126,3 +161,4 @@ ADD mag_model.tree /opt/MARTe2/MARTe2-MDSplus/trees/
 ADD mag_model.datafile /opt/MARTe2/MARTe2-MDSplus/trees/
 ADD mag_model.characteristics /opt/MARTe2/MARTe2-MDSplus/trees/
 
+ADD mag.jscp /root/jscope/configurations/
