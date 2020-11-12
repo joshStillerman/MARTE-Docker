@@ -24,11 +24,11 @@ B = [0;
  
 C = eye(3);
 
-D = 0;
+D = [0;0;0];
 
 plantsys = ss(E\A, E\B, C, D);  
 
-Ts = 1.25e-2; %sampling rate 
+Ts = 1.E-2; %sampling rate 
 
 dplantsys = c2d(plantsys, Ts);
 

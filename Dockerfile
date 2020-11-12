@@ -124,9 +124,9 @@ RUN cd /usr/local/mdsplus/python/MDSplus/; python setup.py install; python3 setu
 
 RUN echo ". /etc/profile.d/mdsplus.sh" >> ~/.bashrc
 
-ADD lev_model.tree /opt/MARTe2/MARTe2-MDSplus/trees/lev_model.tree
-ADD lev_model.characteristics /opt/MARTe2/MARTe2-MDSplus/trees/lev_model.characteristics
-ADD lev_model.datafile /opt/MARTe2/MARTe2-MDSplus/trees/lev_model.datafile
+#ADD lev_model.tree /opt/MARTe2/MARTe2-MDSplus/trees/lev_model.tree
+#ADD lev_model.characteristics /opt/MARTe2/MARTe2-MDSplus/trees/lev_model.characteristics
+#ADD lev_model.datafile /opt/MARTe2/MARTe2-MDSplus/trees/lev_model.datafile
 
 ADD receive_evstream /root/receive_evstream
 ADD receive_evstream.cpp /root/receive_evstream.cpp
@@ -157,8 +157,16 @@ RUN ln -s /usr/local/mdsplus/lib/libSimulinkWrapperGAM.so /usr/local/mdsplus/lib
 ADD rtw_capi_wrapper.so /usr/local/mdsplus/lib/
 ADD MARTE2_COMPONENT.py /usr/local/pydevices/RfxDevices/
 
-ADD mag_model.tree /opt/MARTe2/MARTe2-MDSplus/trees/
-ADD mag_model.datafile /opt/MARTe2/MARTe2-MDSplus/trees/
-ADD mag_model.characteristics /opt/MARTe2/MARTe2-MDSplus/trees/
+#ADD mag_model.tree /opt/MARTe2/MARTe2-MDSplus/trees/
+#ADD mag_model.datafile /opt/MARTe2/MARTe2-MDSplus/trees/
+#ADD mag_model.characteristics /opt/MARTe2/MARTe2-MDSplus/trees/
 
 ADD mag.jscp /root/jscope/configurations/
+
+ADD Controller.so /usr/local/mdsplus/lib/
+ADD State_Estimator.so /usr/local/mdsplus/lib/
+ADD Synthetic_Diagnostic.so /usr/local/mdsplus/lib/
+ADD ObserverController.so /usr/local/mdsplus/lib/
+ADD PlantSimulator.so /usr/local/mdsplus/lib/
+ADD SyntheticDiagnostic.so /usr/local/mdsplus/lib/
+ADD trees.tgz /opt/MARTe2/MARTe2-MDSplus/trees/
