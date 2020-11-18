@@ -54,5 +54,5 @@ Link to Gabriele's directions
 - [Gabriele's MDSplus/MARTe2/Simulink directions](https://docs.google.com/document/d/13b86ljBcJ2ATIZ_8E59QlUWo5uQQYwcs_pPLIFDksjk/edit)
   - They do not include the new MARTE2_SIMULINK_GENERIC device
   - They do not include discussion of simlink atomicity of subsystems
-- [https://docs.google.com/open?id=1vHRwQuGrafutjCxFYD_RZrZiRauSiPvKrBcOKwYZFno&authuser=jas%40psfc.mit.edu&usp=drive_fs](Simulink Coder Directions)
+- [Simulink Coder Directions](https://docs.google.com/open?id=1vHRwQuGrafutjCxFYD_RZrZiRauSiPvKrBcOKwYZFno&authuser=jas%40psfc.mit.edu&usp=drive_fs)
   - They do not include description of params.m  that sets model parameters
