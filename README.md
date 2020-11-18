@@ -31,15 +31,15 @@ To use:
   - in first one: 
 ```
 mdstcl
-TCL> set tree lev
+TCL> set tree mag2
 TCL> create pulse 1
-TCL> set tree lev /shot=1
+TCL> set tree mag2 /shot=1
 TCL> do /meth marte startMarte
 ```
   - in second one
 ```
 cd
-./receive_evstream UPPER
+./receive_evstream MEASURE
 ```
   - in third one
 ```
@@ -48,14 +48,11 @@ cd
 ```
 To do:
 - clean up Dockerfile
-  - installs all at top
   - environment persist across commands
-  - separate RUN commands are good because then things can be changed without redoing everything
-- configure lev tree to do something
-- make a tree that actually calls simulink
 
-Upcomming changes
-- use generic simulink and python devices
-
-Link to Gabriele's directions:
-- https://docs.google.com/document/d/13b86ljBcJ2ATIZ_8E59QlUWo5uQQYwcs_pPLIFDksjk/edit
+Link to Gabriele's directions
+- [Gabriele's MDSplus/MARTe2/Simulink directions](https://docs.google.com/document/d/13b86ljBcJ2ATIZ_8E59QlUWo5uQQYwcs_pPLIFDksjk/edit)
+  - They do not include the new MARTE2_SIMULINK_GENERIC device
+  - They do not include discussion of simlink atomicity of subsystems
+- [https://docs.google.com/open?id=1vHRwQuGrafutjCxFYD_RZrZiRauSiPvKrBcOKwYZFno&authuser=jas%40psfc.mit.edu&usp=drive_fs](Simulink Coder Directions)
+  - They do not include description of params.m  that sets model parameters

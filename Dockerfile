@@ -1,8 +1,9 @@
 from ubuntu:18.04
 
 RUN apt-get update;\
-    apt-get -y upgrade;\
-    apt-get install -y\
+    apt-get -y upgrade
+RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
+RUN   apt-get install -y\
       rsync reprepro wget git automake make tar\
       g++ gfortran openjdk-8-jdk\
       python-dev python-setuptools python-numpy python-pip\
@@ -31,7 +32,8 @@ RUN apt-get update;\
       bison\
       gperf\
       gnupg\
-      xinetd;
+      xinetd
+
 
 
 RUN apt-get -y install curl gnupg && curl -fsSL http://www.mdsplus.org/dist/mdsplus.gpg.key | apt-key add -
@@ -108,7 +110,8 @@ RUN export MARTe2_DIR=/opt/MARTe2/MARTe2; export MARTe2_Components_DIR=/opt/MART
 RUN apt-get -y remove python3-numpy; \
 rm /usr/bin/python3; \
 ln -s /usr/bin/python3.7 /usr/bin/python3; \
-pip3 install numpy
+pip3 install numpy; \
+pip3 install matplotlib
 
 #patch pygam to match UB python locations
 ADD ub-python3.patch /opt/MARTe2/MARTe2-MDSplus/
