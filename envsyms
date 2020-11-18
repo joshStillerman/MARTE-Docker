@@ -3,4 +3,5 @@ MARTe2_Components_DIR        /opt/MARTe2/MARTe2-components
 MARTE_DIR                    /opt/MARTe2/MARTe2-MDSplus/Startup
 lev_path                     /opt/MARTe2/MARTe2-MDSplus/trees
 mag_path                     /opt/MARTe2/MARTe2-MDSplus/trees
+mag2_path                    /opt/MARTe2/MARTe2-MDSplus/trees
 DISPLAY                      host.docker.internal:0
