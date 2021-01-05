@@ -146,38 +146,13 @@ RUN  export MDSPLUS_DIR=/usr/local/mdsplus; export MARTe2_DIR=/opt/MARTe2/MARTe2
 #ADD Playground.patch /opt/MARTe2/MARTe2-MDSplus/
 #RUN cd /opt/MARTe2/MARTe2-MDSplus/; patch -i Playground.patch Startup/Playground.sh
 
-ADD sender.py /root/
-ADD test_monitor.py /root/
+ADD scripts.tgz /root/
 
 ADD shared_images.tgz /usr/local/mdsplus/lib/
-#ADD libSimulinkWrapperGAM.so /usr/local/mdsplus/lib/
-#ADD counter.so /usr/local/mdsplus/lib/
-#ADD increment.so /usr/local/mdsplus/lib/
-#ADD libSimulinkWrapperGAM.so /usr/local/mdsplus/lib/
-#ADD Controller.so /usr/local/mdsplus/lib/
-#ADD Plant.so /usr/local/mdsplus/lib/
-#ADD Setpoint.so /usr/local/mdsplus/lib/
-#ADD SetpointGeneration.so /usr/local/mdsplus/lib/
-#ADD Controller-mag2.so /usr/local/mdsplus/lib/
-#ADD Plant-mag2.so /usr/local/mdsplus/lib/
-
-#RUN ln -s /usr/local/mdsplus/lib/libSimulinkWrapperGAM.so /usr/local/mdsplus/lib/SimulinkWrapperGAM.so
-#ADD rtw_capi_wrapper.so /usr/local/mdsplus/lib/
 ADD MARTE2_COMPONENT.py /usr/local/pydevices/RfxDevices/
 
-#ADD mag_model.tree /opt/MARTe2/MARTe2-MDSplus/trees/
-#ADD mag_model.datafile /opt/MARTe2/MARTe2-MDSplus/trees/
-#ADD mag_model.characteristics /opt/MARTe2/MARTe2-MDSplus/trees/
-
-ADD mag.jscp /root/jscope/configurations/
-ADD monitor.jscp /root/jscope/configurations/
+ADD scopes.tgz /root/jscope/configurations/
  
-#ADD Controller.so /usr/local/mdsplus/lib/
-#ADD State_Estimator.so /usr/local/mdsplus/lib/
-#ADD Synthetic_Diagnostic.so /usr/local/mdsplus/lib/
-#ADD ObserverController.so /usr/local/mdsplus/lib/
-#ADD PlantSimulator.so /usr/local/mdsplus/lib/
-#ADD SyntheticDiagnostic.so /usr/local/mdsplus/lib/
 ADD trees.tgz /opt/MARTe2/MARTe2-MDSplus/trees/
 #
 # remove problematic .py in RfxDevices
