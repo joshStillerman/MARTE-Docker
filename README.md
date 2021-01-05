@@ -46,6 +46,31 @@ cd
 cd
 ./sender.py
 ```
+To run the measurement tree, after building and running the container:
+```
+root@8cdee780f18b:/# mdstcl
+TCL> set current monitor 1
+TCL>
+TCL>
+TCL>
+TCL> set current monitor /inc
+TCL> set tree monitor
+TCL> create pulse 0
+TCL> set tree monitor /shot=0
+TCL> do /meth marte startMarte
+```
+Connect another terminal and Fire up jScope to look at the data in the background:
+```
+jScope -def jscope/configurations/monitor.jscp &
+
+```
+Then to test it (in the docker)
+```
+cd 
+./test_monitor.py
+```
+Then to look at the data hit refresh on the jScope (updates every 10 seconds)
+
 To do:
 - clean up Dockerfile
   - environment persist across commands

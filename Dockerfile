@@ -147,6 +147,7 @@ RUN  export MDSPLUS_DIR=/usr/local/mdsplus; export MARTe2_DIR=/opt/MARTe2/MARTe2
 #RUN cd /opt/MARTe2/MARTe2-MDSplus/; patch -i Playground.patch Startup/Playground.sh
 
 ADD sender.py /root/
+ADD test_monitor.py /root/
 
 ADD shared_images.tgz /usr/local/mdsplus/lib/
 #ADD libSimulinkWrapperGAM.so /usr/local/mdsplus/lib/
@@ -169,7 +170,8 @@ ADD MARTE2_COMPONENT.py /usr/local/pydevices/RfxDevices/
 #ADD mag_model.characteristics /opt/MARTe2/MARTe2-MDSplus/trees/
 
 ADD mag.jscp /root/jscope/configurations/
-
+ADD monitor.jscp /root/jscope/configurations/
+ 
 #ADD Controller.so /usr/local/mdsplus/lib/
 #ADD State_Estimator.so /usr/local/mdsplus/lib/
 #ADD Synthetic_Diagnostic.so /usr/local/mdsplus/lib/
@@ -177,3 +179,7 @@ ADD mag.jscp /root/jscope/configurations/
 #ADD PlantSimulator.so /usr/local/mdsplus/lib/
 #ADD SyntheticDiagnostic.so /usr/local/mdsplus/lib/
 ADD trees.tgz /opt/MARTe2/MARTe2-MDSplus/trees/
+#
+# remove problematic .py in RfxDevices
+#
+RUN rm -f /usr/local/mdsplus/pydevices/RfxDevices/__init__.py*
