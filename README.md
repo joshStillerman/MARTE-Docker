@@ -71,6 +71,45 @@ cd
 ```
 Then to look at the data hit refresh on the jScope (updates every 10 seconds)
 
+Additional examples included:
+lev1, sim1, two_parts.jscp  
+- create 3 terminals
+- in one terminal fire up jScope
+```
+jScope jscope/configurations/two_parts.jscp &
+```
+- start the simulator
+```
+TCL> set tree sim1
+TCL> set current sim1 1
+TCL> create pulse 0
+TCL> set tree sim1 /shot=0
+TCL> do /meth marte startMarte
+```
+- in a second terminal start the controller
+```
+TCL> set tree lev1
+TCL> set current lev1 1
+TCL> create pulse 0
+TCL> set tree lev1 /shot=0
+TCL> do /meth marte startMarte
+```
+- in the third terminal start sending zeros to the setpoin
+```
+cd
+./send_zero.py
+```
+- let it run for a bit
+- put 0 in the shot box of the jScope
+- hit refresh
+- type ^c
+```
+./send_one.py
+```
+- let it run for a bit
+- hit refresh on the scope
+- type ^c to stop
+
 To do:
 - clean up Dockerfile
   - environment persist across commands
