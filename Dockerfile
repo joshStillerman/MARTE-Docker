@@ -158,3 +158,5 @@ ADD trees.tgz /opt/MARTe2/MARTe2-MDSplus/trees/
 # remove problematic .py in RfxDevices
 #
 RUN rm -f /usr/local/mdsplus/pydevices/RfxDevices/__init__.py*
+#
+ADD models.tgz /root/
