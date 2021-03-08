@@ -13,6 +13,7 @@ def sendStream(shot, chanName, time, values):
   msg = bytearray(str(shot)+' '+chanName + ' B '+str(len(timeSer))+' ', 'utf8')
   msg.extend(timeSer.data())
   msg.extend(valuesSer.data())
+  print('about to set the event', np.array(msg))
   MDSplus.Event.seteventRaw('STREAMING',np.array(msg))
 
 class mywindow(QtWidgets.QDialog):
@@ -68,12 +69,18 @@ class mywindow(QtWidgets.QDialog):
         pass
 
     def sendY_M(self):
-        row = self.y_m[:,self.sim_index]
-        sendStream(0, 'Y_M', MDSplus.Float32(self.sim_time), MDSplus.Float64Array(self.y_m[:,self.sim_index]))
+        print('sendY_M')
+        print ('sendStream')
+        print ('sendStream(shot, name, time, data)', 0, 'Y_M', MDSplus.Float32(self.sim_time), MDSplus.Float64Array(self.y_m[self.sim_index,:]))
+        sendStream(0, 'Y_M', MDSplus.Float32(self.sim_time), MDSplus.Float64Array(self.y_m[self.sim_index,:]))
+        print ('send setpoint')
         MDSplus.Event.stream(0, 'SETPOINT', MDSplus.Float32(self.sim_time), MDSplus.Float64(self.set_point[self.sim_index]))
         self.sim_index += 1
-        self.ui.Y_Mlabel.setText(str(self.y_m[0, self.sim_index]))
+        print('set label')
+        self.ui.Y_Mlabel.setText(str(self.y_m[self.sim_index, 0]))
         self.sim_time += .01
+        print ('done')
+
     def startY_M(self):
         pass
     def stopY_M(self):
